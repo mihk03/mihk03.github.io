@@ -8,7 +8,7 @@
 
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <body style="margin : 0px; overflow: hidden;">
-        <a-scene arjs="trackingMethod: best;">
+        <a-scene embedded arjs>
             <a-marker preset='custom' type='pattern'  url='pattern-qr-code2.patt'>
             
             <a-entity
@@ -17,8 +17,7 @@
             scale="0.25 0.25 0.25"
             gltf-model="main2.gltf"
             light="type: ambient; color: #ffffff; intensity: 1.5;"
-            animation__rotate = "property: rotation; dur: 40000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-            arjs-threshold="value: 0.5; pause: true;">
+            animation__rotate = "property: rotation; dur: 40000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;">
       
         </a-entity>
         </a-marker>
