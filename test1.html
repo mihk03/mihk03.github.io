@@ -1,46 +1,47 @@
+<!doctype HTML>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    </head>
-    <body style="margin: 0px; overflow: hidden;">
-        <a-scene embedded arjs>
-            <a-marker preset='custom' type='pattern' url='pattern-qr-code2.patt' smooth="true" antialias="true">
-                <a-entity
-                    id="model"
-                    position="0 0 0"
-                    rotation="0 90 0"
-                    scale="0.25 0.25 0.25"
-                    gltf-model="main7.gltf"
-                    gesture-handler>
-                </a-entity>
-            </a-marker>
-            <a-entity camera></a-entity>
-        </a-scene>
+    
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-        <script>
-            AFRAME.registerComponent('gesture-handler', {
-                schema: {
-                    lastX: { type: 'number', default: 0 },
-                    sensitivity: { type: 'number', default: 0.01 }
-                },
-                init: function () {
-                    this.handleRotation = this.handleRotation.bind(this);
-                    this.el.sceneEl.addEventListener('onefingermove', this.handleRotation);
-                },
-                handleRotation: function (event) {
-                    if (event.detail.state === 'move') {
-                        var rotation = this.el.getAttribute('rotation');
-                        var deltaX = this.data.sensitivity * (event.detail.positionChange.x - this.data.lastX);
-                        rotation.y += deltaX;
-                        this.el.setAttribute('rotation', rotation);
-                        this.data.lastX = event.detail.positionChange.x;
-                    } else if (event.detail.state === 'end') {
-                        this.data.lastX = 0;
-                    }
-                }
-            });
-        </script>
-    </body>
+<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+<script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <body style="margin : 0px; overflow: hidden;">
+        <a-scene   
+        arjs
+        embedded
+        renderer="logarithmicDepthBuffer: true;"
+        vr-mode-ui="enabled: false"
+        gesture-detector
+        id="scene">
+        <a-assets>
+            <a-asset-item
+              id="dish"
+              src="main7.gltf"
+            >
+            </a-asset-item>
+          </a-assets>
+
+            <a-marker preset='custom' 
+            type='pattern'
+            url='pattern-qr-code2.patt'
+            emitevents="true"
+            smooth="true"
+            antialias="true">
+            
+            <a-entity 
+            id="dish-model"
+            position="0 0 0"
+            rotation="0 90 0"
+            scale="0.25 0.25 0.25"
+            gltf-model="#dish"
+            class="clickable"
+            gesture-handler="minScale: 0.25; maxScale: 0.25"
+            >
+      
+        </a-entity>
+        </a-marker>
+        <a-entity camera></a-entity>
+        </a-scene>
+       
 </html>
