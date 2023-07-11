@@ -24,5 +24,18 @@
         </a-marker>
         <a-entity camera></a-entity>
         </a-scene>
+        <script>
+            AFRAME.registerComponent('gesture-handler', {
+                init: function () {
+                    this.handleRotation = this.handleRotation.bind(this);
+                    this.el.sceneEl.addEventListener('onefingermove', this.handleRotation);
+                },
+                handleRotation: function (event) {
+                    var rotation = this.el.getAttribute('rotation');
+                    rotation.y += event.detail.positionChange.x * 2;
+                    this.el.setAttribute('rotation', rotation);
+                }
+            });
+        </script>
     </body>
 </html>
