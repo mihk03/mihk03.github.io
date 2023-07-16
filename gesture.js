@@ -42,13 +42,29 @@ AFRAME.registerComponent("gesture-handler", {
   
     handleRotation: function (event) {
       if (this.isVisible) {
-        
-        this.el.object3D.rotation.x +=
+        this.el.object3D.rotation.y +=
+          event.detail.positionChange.x * this.data.rotationFactor;
+          this.el.object3D.rotation.x +=
           event.detail.positionChange.y * this.data.rotationFactor;
+       
       }
     },
   
-   
+    handleScale: function (event) {
+      if (this.isVisible) {
+        this.scaleFactor *=
+          1 + event.detail.spreadChange / event.detail.startSpread;
+  
+        this.scaleFactor = Math.min(
+          Math.max(this.scaleFactor, this.data.minScale),
+          this.data.maxScale
+        );
+  
+        this.el.object3D.scale.x = this.scaleFactor * this.initialScale.x;
+        this.el.object3D.scale.y = this.scaleFactor * this.initialScale.y;
+        this.el.object3D.scale.z = this.scaleFactor * this.initialScale.z;
+      }
+    },
   });
   
   // Component that detects and emits events for touch gestures
